@@ -12,7 +12,8 @@ object MyOptimizer extends Rule[LogicalPlan] {
     // add limit 2
     // this is just an demo, you should take into more consideration for production
     // eg. ddl is not allowed to add limit, only query
-    GlobalLimit(Literal(2), plan)
+//    GlobalLimit(Literal(2), plan)
+    plan
   }
 
 }

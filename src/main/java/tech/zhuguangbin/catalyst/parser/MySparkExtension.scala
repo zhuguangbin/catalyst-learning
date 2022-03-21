@@ -9,6 +9,8 @@ object MySparkExtension extends (SparkSessionExtensions => Unit) {
       (session, parser) => new MyParser(parser)
     }
 
+    extension.injectPostHocResolutionRule(ForcedMaxOutputRowsRule)
+
     extension.injectOptimizerRule {
       session => MyOptimizer
     }

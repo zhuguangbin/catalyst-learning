@@ -1,15 +1,20 @@
 package tech.zhuguangbin.catalyst.parser
 
+import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
 object MySparkApp {
 
   def main(args: Array[String]): Unit = {
 
+    val conf = new SparkConf()
+      .set(KyuubiSQLConf.WATCHDOG_FORCED_MAXOUTPUTROWS.key, "1")
+
     val spark = SparkSession.builder()
       .appName("MySparkApp")
       .master("local[*]")
-      .enableHiveSupport()
+      .config(conf)
+      //      .enableHiveSupport()
       .withExtensions(MySparkExtension)
       .getOrCreate()
 
@@ -35,6 +40,7 @@ object MySparkApp {
 
     //    val sql = "Select * FROM p"
     val sql = "select score+2 as newscore from p"
+    //    val sql = "describe p"
     val d = spark.sql(sql)
     println("-------logical plan-----------")
     println(d.queryExecution.logical)
